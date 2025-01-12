@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{base :: layout(~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Панель управления администраторами</title>
+</head>
+<body>
+<section>
+    <div class="containerMain">
+        <div class="containerMain__tables">
+            <div class="containerMain__tables--table">
+                <form action="/admin/addNewAdmin" method="post">
+                <table class="table-add">
+                    <tr>
+                        <th colspan="2">Новый администратор</th>
+                    </tr>
+                    <th:block th:if="${session.successMsg}">
+                        <tr>
+                            <td colspan="2">Администратор добавлен!</td>
+                        </tr>
+                    </th:block>
+                    <th:block th:if="${session.errorMsg} or ${session.msg}">
+                        <tr>
+                            <td colspan="2">Ошибка добавления администратора!</td>
+                        </tr>
+                    </th:block>
+                    <tr>
+                        <td colspan="2" class="table-comment"><span class="symbol-comment">*</span> - обязательные поля для заполнения</td>
+                    </tr>
+                    <tr>
+                        <td>Логин:<span class="symbol-comment">*</span></td>
+                        <td><input type="email" name="email" required></td>
+                    </tr>
+                    <tr>
+                        <td>Пароль:<span class="symbol-comment">*</span></td>
+                        <td><input type="password" name="password" required></td>
+                    </tr>
+                    <tr>
+                        <td>Фамилия:<span class="symbol-comment">*</span></td>
+                        <td><input type="text" name="surname" required></td>
+                    </tr>
+                    <tr>
+                        <td>Имя:<span class="symbol-comment">*</span></td>
+                        <td><input type="text" name="name" required></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">&nbsp</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><button class="input-file-button btn-large">Добавить</button></td>
+                    </tr>
+                </table>
+                </form>
+                <th:block th:text="${@userService.removeSessionMessage()}"></th:block>
+            </div>
+            <div class="containerMain__tables--table">
+            <table class="table-list">
+                <tr>
+                    <th>Логин</th>
+                    <th>Фамилия</th>
+                    <th>Имя</th>
+                    <th>Блок управления</th>
+                </tr>
+                <tr th:each="admin : ${admins}">
+                    <td th:text="${admin.email}">Email администратора</td>
+                    <th:block th:each="person : ${persons}">
+                        <td th:if="${person.email} == ${admin.email}" th:text="${person.surname}">Фамилия администратора</td>
+                        <td th:if="${person.email} == ${admin.email}" th:text="${person.name}">Имя администратора</td>
+                    </th:block>
+                    <td>
+                        <th:block th:if="${admin.role} == 'ROLE_ADMIN'">
+                            <a th:href="@{'/admin/changeRole/'+${admin.id}}" th:text="Активен" class="button btn-medium btn-green">Назначение роли</a>
+                        </th:block>
+                        <th:block th:if="${admin.role} == 'ROLE_ADMIN_PAUSE'">
+                            <a th:href="@{'/admin/changeRole/'+${admin.id}}" th:text="Заблокирован" class="button btn-medium btn-red">Назначение роли</a>
+                        </th:block>
+                        <a th:href="@{'/admin/deleteAdmin/'+${admin.id}}" class="button btn-medium btn-red">Удалить</a>
+                    </td>
+                </tr>
+            </table>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

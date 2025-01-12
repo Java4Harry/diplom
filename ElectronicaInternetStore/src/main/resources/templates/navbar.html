@@ -1,0 +1,33 @@
+<div th:fragment="navbar">
+<div class="container__headerMenu">
+    <div class="container__headerMenu--block">
+        <div class="container__headerMenu--catalog">
+            <div><a href="#">Каталог товаров</a></div>
+        </div>
+        <div class="container__headerMenu--page">
+            <div><a th:href="@{/about}">О нас</a></div>
+        </div>
+        <div class="container__headerMenu--page">
+            <div><a th:href="@{/payDelivery}">Оплата и доставка</a></div>
+        </div>
+        <div class="container__headerMenu--page">
+            <div><a th:href="@{/contacts}">Контакты</a></div>
+        </div>
+        <div class="container__headerMain--search">
+            <form action="/searchItem" method="get">
+                <input type="search" name="search" maxlength="200" placeholder="что ищем?" class="input-search">
+                <button class="input-file-button">Поиск</button>
+            </form>
+        </div>
+    </div>
+</div>
+    <div class="catalog-visibility">
+    <div class="container__catalog">
+        <th:block th:each="currentCategory : ${@categoryService.findAllSortedCategory()}">
+            <div class="container__catalog--item">
+                <a th:href="@{'/goToCategoryPage/' + ${currentCategory.getId()}}"><div th:text="${currentCategory.name}"></div></a>
+            </div>
+        </th:block>
+    </div>
+    </div>
+</div>

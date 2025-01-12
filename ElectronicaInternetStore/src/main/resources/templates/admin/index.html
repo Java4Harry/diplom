@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{base :: layout(~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Панель управления администратора</title>
+</head>
+<body>
+<section>
+    <div class="containerMain">
+        <div class="container__admin">
+            <a th:href="@{/admin/editAdmins}"><div class="container__admin--item">
+                <img src="/images/control_panel/admin.png" alt="Администраторы">
+                <p>Управление администраторами</p>
+            </div></a>
+            <a th:href="@{/admin/editProfileAdmin}"><div class="container__admin--item">
+                <img src="/images/control_panel/admin_profile.png" alt="Профиль администратора">
+                <p>Профиль администратора</p>
+            </div></a>
+            <a th:href="@{/admin/editUsers}"><div class="container__admin--item">
+                <img src="/images/control_panel/users.png" alt="Пользователи">
+                <p>Управление пользователями</p>
+            </div></a>
+            <a th:href="@{/admin/editCategories}"><div class="container__admin--item">
+                <img src="/images/control_panel/categories.png" alt="Категории">
+                <p>Управление категориями</p>
+            </div></a>
+            <a th:href="@{/admin/editGoods}"><div class="container__admin--item">
+                <img src="/images/control_panel/good.png" alt="Товары">
+                <p>Управление товарами</p>
+            </div></a>
+            <a th:href="@{/admin/editOrders}"><div class="container__admin--item">
+                <img src="/images/control_panel/orders.png" alt="Заказы">
+                <p>Управление заказами</p>
+            </div></a>
+        </div>
+    </div>
+</section>
+</body>
+</html>

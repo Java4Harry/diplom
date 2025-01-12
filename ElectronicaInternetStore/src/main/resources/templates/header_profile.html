@@ -1,0 +1,21 @@
+<div th:fragment="header_profile">
+    <div class="header-items">
+        <th:block th:if="${person}">
+            <p th:text="${'Привет, ' + person.name}">Личный кабинет</p>
+                <th:block th:if="${user.role == 'ROLE_ADMIN'}">
+                    <p><a th:href="@{/admin/}"><button class="button btn-blue">Панель управления</button></a></p>
+                    <p><a th:href="@{/admin/profile}"><button class="button btn-green">Профиль</button></a></p>
+                </th:block>
+                <th:block th:if="${user.role == 'ROLE_USER'}">
+                    <p><a th:href="@{/user/orders}"><button class="button btn-blue">Мои заказы</button></a></p>
+                    <p><a th:href="@{/user/profile}"><button class="button btn-green">Профиль</button></a></p>
+                </th:block>
+            <p><a th:href="@{/logout}"><button class="button btn-red">Выйти</button></a></p>
+        </th:block>
+        <th:block th:unless="${person}">
+            <p>Личный кабинет</p>
+            <p><a th:href="@{/signin}"><button class="button btn-green">Войти</button></a></p>
+            <p><a th:href="@{/registration}"><button class="button btn-blue">Регистрация</button></a></p>
+        </th:block>
+    </div>
+</div>

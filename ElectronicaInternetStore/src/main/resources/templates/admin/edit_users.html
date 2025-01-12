@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{base :: layout(~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Панель управления пользователями</title>
+</head>
+<body>
+<section>
+    <div class="containerMain">
+        <div class="containerMain__tables">
+            <div class="containerMain__tables--table">
+                <table class="table-list">
+                    <tr>
+                        <th>Логин</th>
+                        <th>Фамилия</th>
+                        <th>Имя</th>
+                        <th>Телефон</th>
+                        <th>Блок управления</th>
+                    </tr>
+                    <tr th:each="currentUser : ${users}">
+                        <td th:text="${currentUser.email}">Email пользователя</td>
+                        <th:block th:each="person : ${persons}">
+                            <td th:if="${person.email} == ${currentUser.email}" th:text="${person.surname}">Фамилия пользователя</td>
+                            <td th:if="${person.email} == ${currentUser.email}" th:text="${person.name}">Имя пользователя</td>
+                            <td th:if="${person.email} == ${currentUser.email}" th:text="${person.mobile}">Телефон пользователя</td>
+                        </th:block>
+                        <td>
+                            <th:block th:if="${currentUser.role} == 'ROLE_USER'">
+                                <a th:href="@{'/admin/changeRoleUser/'+${currentUser.id}}" th:text="Активен" class="button btn-medium btn-green">Назначение роли</a>
+                            </th:block>
+                            <th:block th:if="${currentUser.role} == 'ROLE_USER_PAUSE'">
+                                <a th:href="@{'/admin/changeRoleUser/'+${currentUser.id}}" th:text="Заблокирован" class="button btn-medium btn-red">Назначение роли</a>
+                            </th:block>
+                            <a th:href="@{'/admin/deleteUser/'+${currentUser.id}}" class="button btn-medium btn-red">Удалить</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

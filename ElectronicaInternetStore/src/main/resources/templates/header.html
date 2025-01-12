@@ -1,0 +1,53 @@
+<div th:fragment="header">
+    <div class="container__header">
+        <div class="container__headerLine">
+            <div class="container__headerLine--block">
+                <div>
+                    Территория электроники - хоть розетку, хоть компьютер...
+                </div>
+                <div class="headerLine__container-contacts">
+                    <a href="tel:https://wa.me/79999999999">
+                        <div class="headerLine__contacts--links">
+                            <div><img src="/images/picto/whatsapp.png" alt="whatsapp"></div>
+                            <div>WhatsApp</div>
+                        </div>
+                    </a>
+                    <a href="tel:https://t.me/+79999999999">
+                        <div class="headerLine__contacts--links">
+                            <div><img src="/images/picto/telegram.png" alt="telegram"></div>
+                            <div>Telegram</div>
+                        </div>
+                    </a>
+                    <a href="mailto:order@equalizer.com">
+                        <div class="headerLine__contacts--links">
+                            <div><img src="/images/picto/mail.png" alt="email"></div>
+                            <div>Email</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container__headerMain">
+        <div class="container__headerMain--logo">
+            <a th:href="@{/}">
+                <img src="/images/logo.png" alt="logo">
+            </a>
+        </div>
+        <div class="container__headerMain--phone">
+            <p>8 (800) 888-77-77</p>
+        </div>
+        <div class="container__headerMain--shopCard">
+            <div th:replace="~{header_profile :: header_profile}">
+            </div>
+        </div>
+        <div class="container__headerMain--shopCard">
+            <div class="header-items">
+                <p>Товаров - 10</p>
+                <p>Сумма заказа - 1200р</p>
+                <p><button class="button btn-green">Моя корзина</button></p>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

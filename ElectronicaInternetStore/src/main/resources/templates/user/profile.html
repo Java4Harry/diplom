@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{base :: layout(~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Профиль пользователя</title>
+</head>
+<body>
+<section>
+    <div class="container__form">
+        <div class="container__form--block">
+            <th:block th:if="${session.successMsg} and !${session.errorMsg}">
+                <div class="form-name" th:text="${session.successMsg}">Персональные данные</div>
+            </th:block>
+            <th:block th:if="!${session.successMsg} and !${session.errorMsg}">
+                <div class="form-name">Персональные данные</div>
+            </th:block>
+            <form action="/user/editUserProfile" method="post">
+                <input type="hidden" name="email" th:value="${user.email}">
+                <table>
+                    <tr>
+                        <td>Фамилия:<span class="symbol-comment">*</span></td>
+                        <td><input type="text" name="surname" required th:value="${person.surname}"></td>
+                    </tr>
+                    <tr>
+                        <td>Имя:<span class="symbol-comment">*</span></td>
+                        <td><input type="text" name="name" required th:value="${person.name}"></td>
+                    </tr>
+                    <tr>
+                        <td>Отчество:</td>
+                        <td><input type="text" name="fatherName" th:value="${person.fatherName}"></td>
+                    </tr>
+                    <tr>
+                        <td>Телефон:<span class="symbol-comment">*</span></td>
+                        <td><input type="text" name="mobile" required th:value="${person.mobile}"></td>
+                    </tr>
+                    <tr>
+                        <td>Дата рождения:</td>
+                        <td><input type="date" name="birthday" th:value="${person.birthday}"></td>
+                    </tr>
+                    <tr>
+                        <td>Город:</td>
+                        <td><input type="text" name="city" th:value="${person.city}"></td>
+                    </tr>
+                    <tr>
+                        <td>Адрес:</td>
+                        <td><input type="text" name="address" th:value="${person.address}"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">&nbsp</td>
+                    </tr>
+                    <tr>
+                            <td colspan="2"><button class="input-file-button btn-large">Обновить</button></td>
+                    </tr>
+                </table>
+                <th:block th:text="${@userService.removeSessionMessage()}"></th:block>
+            </form>
+        </div>
+    </div>
+</section>
+</body>
+</html>

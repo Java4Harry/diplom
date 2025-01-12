@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{base :: layout(~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Эквалайзер - Интернет-магазин электроники</title>
+</head>
+<body>
+<section>
+    <div class="containerMain">
+        <div class="containerMain__block">
+        <h2 th:if="${goodsSize > 0}" th:text="'------ '+ ${category.name} + ' ------'">Категория товаров</h2>
+        <div class="containerMain__navi">
+            <th:block th:if="${goodsSize > 0}" th:each="currentGood:${goodsInCategory}">
+                <div class="containerMain__items">
+                    <a th:href="@{'/goToItemPage/' + ${currentGood.id}}">
+                        <div class="catalog-card"><img th:src="@{'/images/goods/' + ${currentGood.image}}" alt="Картинка товара" /></div>
+                        <div class="catalog-card-text" th:text="${currentGood.name}">Название товара</div>
+                    </a>
+                </div>
+            </th:block>
+            <th:block th:unless="${goodsSize > 0}">
+                <h1>------ В категории нет товаров ------</h1>
+            </th:block>
+        </div>
+    </div>
+        <th:block th:if="${totalPages > 1}">
+        <div class="container__pagination">
+            <div class="container__pagination--item">
+                        <ul class="pagination-line">
+                            <span th:classappend="${isFirst}?'pagination-disabled':''">
+                                    <a th:href="@{'?pageNo='+${pageNo-1}}">
+                                    <li class="pagination-item">
+                                    Предыдущая
+                                    </li>
+                                    </a>
+                            </span>
+                            <th:block th:each="i:${#numbers.sequence(1, totalPages)}">
+                                <span th:classappend="${pageNo+1==i?'pagination-active':''}">
+                                    <a th:href="@{'?pageNo='+${i-1}}">
+                                    <li class="pagination-item"th:text="${i}">
+                                    </li>
+                                    </a>
+                                </span>
+                            </th:block>
+                            <span th:classappend="${isLast}?'pagination-disabled':''">
+                                <a th:href="@{'?pageNo='+${pageNo+1}}">
+                                <li class="pagination-item">
+                                    Следующая
+                                </li>
+                                </a>
+                            </span>
+                        </ul>
+            </div>
+            <div class="container__pagination--item">
+                (Количество товаров: <span th:text="${totalGoods} + ' )'"></span>
+            </div>
+        </div>
+        </th:block>
+    </div>
+</section>
+</body>
+</html>

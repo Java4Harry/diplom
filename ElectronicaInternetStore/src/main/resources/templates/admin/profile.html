@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{base :: layout(~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Профиль администратора</title>
+</head>
+<body>
+<section>
+    <div class="container__form">
+        <div class="container__form--block">
+                <div class="form-name">Персональные данные</div>
+            <form action="editAdminProfile" method="post">
+                <input type="hidden" name="id" th:value="${person.id}">
+                <table>
+                    <th:block th:if="${session.successMsg}">
+                        <tr>
+                            <td colspan="2" th:text="${session.successMsg}">Успешно</td>
+                        </tr>
+                    </th:block>
+                    <th:block th:if="${session.errorMsg}">
+                        <tr>
+                            <td colspan="2" th:text="${session.errorMsg}">Неуспешно</td>
+                        </tr>
+                    </th:block>
+                    <tr>
+                        <td colspan="2" class="table-comment"><span class="symbol-comment">*</span> - обязательные поля для заполнения</td>
+                    </tr>
+                    <tr>
+                        <td>Фамилия:<span class="symbol-comment">*</span></td>
+                        <td><input type="text" name="surname" required th:value="${person.surname}"></td>
+                    </tr>
+                    <tr>
+                        <td>Имя:<span class="symbol-comment">*</span></td>
+                        <td><input type="text" name="name" required th:value="${person.name}"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">&nbsp</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><button class="input-file-button btn-large">Обновить</button></td>
+                    </tr>
+                </table>
+                <th:block th:text="${@userService.removeSessionMessage()}"></th:block>
+            </form>
+        </div>
+    </div>
+</section>
+</body>
+</html>

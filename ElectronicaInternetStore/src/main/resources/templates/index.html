@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{base :: layout(~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Эквалайзер - Интернет-магазин электроники</title>
+</head>
+<body>
+<section>
+<div th:replace="~{banner :: banner}"></div>
+<div class="containerMain">
+    <h1>Каталог товаров</h1>
+    <div class="containerMain__navi">
+        <th:block th:each="currentCategory : ${@categoryService.findAllSortedCategory()}">
+            <div class="containerMain__navi--items">
+                <a th:href="@{'/goToCategoryPage/' + ${currentCategory.getId()}}">
+                        <div class="catalog-card"><img th:src="@{'/images/categories/' + ${currentCategory.getImage()}}" alt="категория" /></div>
+                        <div class="catalog-card-text" th:text="${currentCategory.getName()}">Название категории</div>
+                </a>
+            </div>
+        </th:block>
+    </div>
+</div>
+</section>
+</body>
+</html>

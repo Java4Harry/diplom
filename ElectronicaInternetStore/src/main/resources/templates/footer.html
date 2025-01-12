@@ -1,0 +1,16 @@
+<div th:fragment="footer">
+    <div class="container__footer">
+        <a th:href="@{/}"><div class="input-file-button btn-navi-main">Главная</div></a>
+        <a href="javascript:history.go(-1)"><div class="input-file-button btn-navi-prev">Назад</div></a>
+        <a id="shopping"><div class="btn-shopping"><img class="btn-shopping-on" src="/images/picto/shopcart_on.png" /><img class="btn-shopping-off" src="/images/picto/shopcart_off.png"/></div></a>
+        <div class="container__footer--block">
+            <div><span>&copy;2001-2025 Магазин электроники - Эквалайзер. Все права защищены</span></div>
+        </div>
+        <div class="container__footer--block">
+            <div><a th:href="@{/}">Каталог товаров</a></div>
+            <div><a th:href="@{/about}">О нас</a></div>
+            <div><a th:href="@{/payDelivery}">Оплата и доставка</a></div>
+            <div><a th:href="@{/contacts}">Контакты</a></div>
+        </div>
+    </div>
+</div>

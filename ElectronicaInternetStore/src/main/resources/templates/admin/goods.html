@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{base :: layout(~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Панель управления товарами</title>
+</head>
+<body>
+<section>
+    <div class="containerMain">
+        <div class="containerMain__tables">
+            <div class="containerMain__tables--table">
+                <form action="/admin/addNewGood" method="post" enctype="multipart/form-data">
+                    <table class="table-add">
+                        <tr>
+                            <th colspan="2">Новый товар</th>
+                        </tr>
+                        <th:block th:if="${session.successMsg}">
+                            <tr>
+                                <td colspan="2" class="info-success" th:text="${session.successMsg}">Товар добавлен!</td>
+                            </tr>
+                        </th:block>
+                        <th:block th:if="${session.errorMsg}">
+                            <tr>
+                                <td  class="info-error" colspan="2" th:text="${session.errorMsg}">Ошибка добавления товара!</td>
+                            </tr>
+                        </th:block>
+                        <tr>
+                            <td colspan="2" class="table-comment"><span class="symbol-comment">*</span> - обязательные поля для заполнения</td>
+                        </tr>
+                        <tr>
+                            <td>Категория:<span class="symbol-comment">*</span></td>
+                            <td>
+                                <select name="category" required>
+                                    <option value="">--не выбрана--</option>
+                                    <th:block th:each="currentCategory : ${@categoryService.findAllCategory()}">
+                                        <option th:value="${currentCategory.name}" th:text="${currentCategory.name}"></option>
+                                    </th:block>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Артикул:<span class="symbol-comment">*</span></td>
+                            <td><input type="text" name="partNumber" required></td>
+                        </tr>
+                        <tr>
+                            <td>Название:<span class="symbol-comment">*</span></td>
+                            <td><input type="text" name="name" required></td>
+                        </tr>
+                        <tr>
+                            <td>Бренд:</td>
+                            <td><input type="text" name="brand"></td>
+                        </tr>
+                        <tr>
+                            <td>Вес:</td>
+                            <td><input type="text" name="weight"></td>
+                        </tr>
+                        <tr>
+                            <td>Ширина:</td>
+                            <td><input type="text" name="width"></td>
+                        </tr>
+                        <tr>
+                            <td>Длина:</td>
+                            <td><input type="text" name="length"></td>
+                        </tr>
+                        <tr>
+                            <td>Высота:</td>
+                            <td><input type="text" name="height"></td>
+                        </tr>
+                        <tr>
+                            <td>Доступно на складе:</td>
+                            <td><input type="number" name="count" value="0"></td>
+                        </tr>
+                        <tr>
+                            <td>Цена:</td>
+                            <td><input type="number" name="price" value="0"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">Описание:</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><textarea name="description" cols="45" rows="12"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td>Изображение:</td>
+                            <td>
+                                <label class="input-file">
+                                    <input type="file" name="file" id="file">
+                                    <span class="input-file-button">Выберите файл</span>
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <span id="choose_file"></span>
+                                <script src="/scripts/image.js"></script>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">&nbsp</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><button class="input-file-button btn-large">Добавить</button></td>
+                        </tr>
+                    </table>
+                </form>
+                <th:block th:text="${@userService.removeSessionMessage()}"></th:block>
+            </div>
+            <div class="containerMain__tables--table">
+                <form action="/admin/sortedGoodsByCategory" method="post">
+                <table class="table-margin">
+                    <tr>
+                        <td>
+                        <select name="category" required>
+                            <option value="all">--Все--</option>
+                            <th:block th:each="currentCategory : ${@categoryService.findAllCategory()}">
+                                <option th:value="${currentCategory.name}" th:text="${currentCategory.name}"></option>
+                            </th:block>
+                        </select>
+                        </td>
+                        <td colspan="2"><button class="input-file-button btn-large">Сортировка по категории</button></td>
+                    </tr>
+                </table>
+                </form>
+                <table class="table-list">
+                    <tr>
+                        <th>Артикул</th>
+                        <th>Название</th>
+                        <th>Изображение</th>
+                        <th>Количество</th>
+                        <th>Цена</th>
+                        <th>Блок управления</th>
+                    </tr>
+                        <tr th:each="good : ${goods}">
+                        <td th:text="${good.partNumber}">Артикул</td>
+                        <td th:text="${good.name}">Название</td>
+                        <td class="table-td-image"><img th:src="@{'../images/goods/' + ${good.image}}"></td>
+                        <td th:text="${good.count}">Количество</td>
+                        <td th:text="${good.price}">Цена</td>
+                        <td>
+                            <a th:href="@{'/admin/editGoodItem/'+${good.id}}" th:text="Редактировать" class="button btn-medium btn-green">Редактировать</a>
+                            <th:block th:if="${good.status} == 'show'">
+                                <a th:href="@{'/admin/changeGoodStatus/'+${good.id}}" th:text="Скрыть" class="button btn-medium btn-green">Показывается</a>
+                            </th:block>
+                            <th:block th:if="${good.status} == 'disabled'">
+                                <a th:href="@{'/admin/changeGoodStatus/'+${good.id}}" th:text="Опубликовать" class="button btn-medium btn-red">Не показывается</a>
+                            </th:block>
+                            <a th:href="@{'/admin/deleteGoodItem/'+${good.id}}" class="button btn-medium btn-red">Удалить</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

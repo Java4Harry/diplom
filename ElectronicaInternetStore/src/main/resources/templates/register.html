@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{base :: layout(~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Страница регистрации</title>
+</head>
+<body>
+<section>
+    <div class="container__form">
+        <div class="container__form--block">
+            <th:block th:if="${session.msg}">
+                <div class="form-name form-danger" th:text="${session.msg}">Регистрация пользователя</div>
+            </th:block>
+            <th:block th:if="${session.errorMsg}">
+                <div class="form-name form-danger" th:text="${session.errorMsg}">Регистрация пользователя</div>
+            </th:block>
+            <th:block th:unless="${session.errorMsg} or ${session.msg}">
+                <div class="form-name">Регистрация пользователя</div>
+            </th:block>
+            <th:block th:if="!${session.successMsg}" th:text="${@userService.removeSessionMessage()}"></th:block>
+            <form action="saveUser" method="post">
+                <table>
+                    <tr>
+                        <td>Логин:</td>
+                        <td><input type="email" name="email" required></td>
+                    </tr>
+                    <tr>
+                        <td>Пароль:</td>
+                        <td><input type="password" name="password" required></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">&nbsp</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><button class="input-file-button btn-large">Регистрация</button></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+</section>
+</body>
+</html>

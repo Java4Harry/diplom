@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{base :: layout(~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Панель управления товарами</title>
+</head>
+<body>
+<section>
+        <div class="container__good">
+    <div class="container__good--item">
+        <div>
+            <img th:src="'/images/goods/' + ${good.image}" alt="Фотогорафия товара" />
+        </div>
+    </div>
+    <div class="container__good--item">
+        <h1 th:text="${good.name}"></h1>
+        <p th:text="'Артикул: ' + ${good.partNumber}"></p>
+        <p th:text="${good.description}"></p>
+        <p class="price" th:text="'Цена: ' + ${good.price} + ' руб.'"></p>
+        <div class="container__buy" th:classappend="${user}?'':'disabled'">
+            <div class="shopping">
+                <div class="flex-column">Доступно:</div>
+                <div class="flex-column-input">Доступно:</div>
+            </div>
+            <div class="shopping">
+                <form action="/user/addItemToShopCard" method="post">
+                    <input type="text" name="search" maxlength="200" class="input-search">
+                    <button class="input-file-button">В корзину</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+    </div>
+    <div class="container__good align-left">
+        <div class="container__good--item">
+            <h1>Харакеристики</h1>
+        </div>
+        <div class="container__good--item">
+            <ul>
+                <li th:text="'Бренд: ' + ${good.brand}">></li>
+                <li th:text="'Вес: ' + ${good.weight}"></li>
+                <li th:text="'Ширина: ' + ${good.width}"></li>
+                <li th:text="'Длина: ' + ${good.length}"></li>
+                <li th:text="'Высота: ' + ${good.height}"></li>
+            </ul>
+        </div>
+    </div>
+    </div>
+</section>
+</body>
+</html>

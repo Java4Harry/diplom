@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{base :: layout(~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Эквалайзер - Интернет-магазин электроники</title>
+</head>
+<body>
+<section>
+    <div class="containerMain">
+        <div class="containerMain__block">
+            <h2 th:if="${search.size() > 0}" th:text="'------ Результат поискового запроса ------'">Категория товаров</h2>
+            <div class="containerMain__navi">
+                <th:block th:if="${search.size() > 0}" th:each="currentSearch : ${search}">
+                    <div class="containerMain__items">
+                        <a th:href="@{'/goToItemPage/' + ${currentSearch.id}}">
+                            <div class="catalog-card"><img th:src="@{'/images/goods/' + ${currentSearch.image}}" alt="Картинка товара" /></div>
+                            <div class="catalog-card-text" th:text="${currentSearch.name}">Название товара</div>
+                        </a>
+                    </div>
+                </th:block>
+                <th:block th:unless="${search.size() > 0}">
+                    <h1>------ Товаров не найдено ------</h1>
+                </th:block>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>
